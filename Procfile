@@ -1,1 +1,1 @@
-web: ./main
+web: go build -o main && ./main

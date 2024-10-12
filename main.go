@@ -46,6 +46,7 @@ type StartDialogueRequestBody struct {
 
 func main() {
 	app := gin.Default()
+	app.SetTrustedProxies(nil)
 
 	// Define CORS options
 	corsConfig := cors.Config{
