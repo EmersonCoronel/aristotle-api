@@ -1,1 +1,1 @@
-web: ./main
+web: bin/aristotle-api
