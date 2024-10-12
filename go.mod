@@ -1,4 +1,4 @@
-module github.com/EmersonCoronel/artistotle-api.git
+module github.com/EmersonCoronel/aristotle-api
 
 go 1.21.0
 
