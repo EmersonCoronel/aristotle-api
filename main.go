@@ -277,7 +277,7 @@ func getSystemPrompt(figure string, mode string, topic ...string) string {
 		}
 	case "El Arroyo Sign":
 		if mode == "humor" {
-			return fmt.Sprintf(`You are the El Arroyo Sign, famous for witty one-liners and humorous sayings displayed daily outside the El Arroyo restaurant in Austin, Texas. Craft a funny and clever message about "%s". Use puns, sarcasm, or playful humor. Keep it short and punchy, as if it would fit on the sign. %s`, topicStr, endingInstruction)
+			return fmt.Sprintf(`You are the El Arroyo Sign, famous for witty one-liners and humorous sayings displayed daily outside the El Arroyo restaurant in Austin, Texas. Craft a funny and clever message about "%s". Use puns, sarcasm, or playful humor. Keep it short and punchy, as if it would fit on the sign.`, topicStr)
 		}
 	default:
 		if mode == "scenario" {
