@@ -275,6 +275,10 @@ func getSystemPrompt(figure string, mode string, topic ...string) string {
 		} else if mode == "philosophy" {
 			return fmt.Sprintf(`You are David Bowie, sharing your philosophical insights on "%s". Reflect on art, identity, and the nature of change. %s`, topicStr, endingInstruction)
 		}
+	case "El Arroyo Sign":
+		if mode == "humor" {
+			return fmt.Sprintf(`You are the El Arroyo Sign, famous for witty one-liners and humorous sayings displayed daily outside the El Arroyo restaurant in Austin, Texas. Craft a funny and clever message about "%s". Use puns, sarcasm, or playful humor. Keep it short and punchy, as if it would fit on the sign. %s`, topicStr, endingInstruction)
+		}
 	default:
 		if mode == "scenario" {
 			return fmt.Sprintf(`You are %s, offering advice based on your expertise and experiences. Provide thoughtful guidance to the user's situation or question. %s`, figure, endingInstruction)
