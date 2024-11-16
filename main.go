@@ -210,6 +210,55 @@ func main() {
 		port = "4000"
 	}
 	app.Run(":" + port)
+
+	// Define struct for CheckAnswer request
+	type CheckAnswerRequestBody struct {
+		LessonID   string `json:"lessonId"`
+		UserAnswer string `json:"userAnswer"`
+	}
+
+	// Check Answer Endpoint
+	app.POST("/api/check-answer", func(c *gin.Context) {
+		var reqBody CheckAnswerRequestBody
+		if err := c.ShouldBindJSON(&reqBody); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request"})
+			return
+		}
+
+		fmt.Println("Received answer for lesson:", reqBody.LessonID)
+
+		// Construct the prompt for OpenAI
+		prompt := fmt.Sprintf(`You are an expert tutor assessing a student's answer.
+
+	Lesson Topic: Aristotle's Nicomachean Ethics
+
+	Question: Explain what Aristotle means by eudaimonia and how virtue is connected to achieving it.
+
+	Student's Answer:
+	%s
+
+	As the tutor, provide constructive feedback on the student's answer. Highlight what they did well and where they can improve. Be encouraging and aim to guide them toward a deeper understanding.`, reqBody.UserAnswer)
+
+		// Create OpenAI completion request
+		ctx := c.Request.Context()
+
+		req := openai.CompletionRequest{
+			Model:     "text-davinci-003", // Or another suitable model
+			Prompt:    prompt,
+			MaxTokens: 150,
+			// You can adjust temperature and other parameters as needed
+		}
+
+		resp, err := client.CreateCompletion(ctx, req)
+		if err != nil {
+			fmt.Println("Error creating completion:", err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error generating feedback"})
+			return
+		}
+
+		feedback := resp.Choices[0].Text
+		c.JSON(http.StatusOK, gin.H{"feedback": feedback})
+	})
 }
 
 func getSystemPrompt(figure string, mode string, topic ...string) string {
